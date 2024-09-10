@@ -1,0 +1,29 @@
+/* Styling for the container that holds the grid */
+.container {
+    display: flex; /* Aligns child elements in a row */
+    margin-bottom: 30px; /* Adds space below the container */
+}
+/* Styling for each column in the grid */
+.column {
+    display: flex; /* Aligns child elements in a column */
+    flex-direction: column; /* Stacks children vertically */
+    margin-left: 10px; /* Adds space to the left of each column */
+}
+/* Styling for each cell in the grid */
+.cell {
+    display: flex; /* Aligns child elements (text) in the center */
+    justify-content: center; /* Horizontally centers the text */
+    align-items: center; /* Vertically centers the text */
+    margin: 0; /* Removes default margins */
+    font-size: 24px; /* Sets font size */
+    height: 40px; /* Sets the height of the cell */
+    width: 40px; /* Sets the width of the cell */
+}
+/* Styling for the container that holds the buttons */
+.button-container {
+    margin-top: 10px; /* Adds space above the button container */
+}
+/* Styling for buttons */
+button {
+    margin: 5px; /* Adds space around each button */
+}

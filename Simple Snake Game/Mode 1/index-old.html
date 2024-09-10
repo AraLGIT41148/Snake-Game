@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        .container {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+        }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-size: 24px;
+            height: 40px;
+            width: 40px;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <p class="cell" id="03">⬜</p>
+            <p class="cell" id="02">😐</p>
+            <p class="cell" id="01">⬜</p>
+            <p class="cell" id="00">⬜</p>
+        </div>
+        <div class="column">
+            <p class="cell" id="13">⬜</p>
+            <p class="cell" id="12">⬜</p>
+            <p class="cell" id="11">⬜</p>
+            <p class="cell" id="10">⬜</p>
+        </div>
+        <div class="column">
+            <p class="cell" id="23">⬜</p>
+            <p class="cell" id="22">⬜</p>
+            <p class="cell" id="21">⬜</p>
+            <p class="cell" id="20">⬜</p>
+        </div>
+        <div class="column">
+            <p class="cell" id="33">⬜</p>
+            <p class="cell" id="32">⬜</p>
+            <p class="cell" id="31">🟩</p>
+            <p class="cell" id="30">⬜</p>
+        </div>
+        <div class="column">
+            <p class="cell" id="43">⬜</p>
+            <p class="cell" id="42">⬜</p>
+            <p class="cell" id="41">⬜</p>
+            <p class="cell" id="40">⬜</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button onclick="ymoveup()">y+</button>
+        <button onclick="xmoveright()">x+</button><br>
+        <button onclick="xmoveleft()">x-</button>
+        <button onclick="ymovedown()">y-</button>
+    </div>
+
+    <script>
+        let place = {x: 0, y: 2};
+        let placehistory = ["02"];
+
+        function ymovedown() {
+            if (place.y > 0 && !placehistory.includes(place.x.toString() + (place.y - 1).toString())) {
+                place.y -= 1;
+                updateCell();
+            }
+        }
+
+        function xmoveright() {
+            if (place.x < 4 && !placehistory.includes((place.x + 1).toString() + place.y.toString())) {
+                place.x += 1;
+                updateCell();
+            }
+        }
+
+        function ymoveup() {
+            if (place.y < 3 && !placehistory.includes(place.x.toString() + (place.y + 1).toString())) {
+                place.y += 1;
+                updateCell();
+            }
+        }
+
+        function xmoveleft() {
+            if (place.x > 0 && !placehistory.includes((place.x - 1).toString() + place.y.toString())) {
+                place.x -= 1;
+                updateCell();
+            }
+        }
+
+        function updateCell() {
+            if (placehistory.length === 3) {
+                document.getElementById(placehistory[0]).innerHTML = "🟨"; placehistory.shift();
+            }
+            placehistory.push(place.x.toString() + place.y.toString());
+	    document.getElementById(placehistory[placehistory.length-1]).innerHTML = "😐";
+	    document.getElementById(placehistory[placehistory.length-2]).innerHTML = "⚫";
+            check();
+        }
+
+        let a = 3;
+        let b = 1;
+
+        function greenblock() {
+            let randa = Math.random(); 
+            a = Math.floor(randa * 5);
+            let randb = Math.random(); 
+            b = Math.floor(randb * 4);
+            if (placehistory.includes(a.toString() + b.toString())) {
+                greenblock();
+            } else {
+                document.getElementById(a.toString() + b.toString()).innerHTML = "🟩";
+            }
+        }
+
+        function check() {
+            if (place.x.toString() + place.y.toString() === a.toString() + b.toString()) {
+                document.getElementById(place.x.toString() + place.y.toString()).innerHTML = "😃";
+                greenblock();
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

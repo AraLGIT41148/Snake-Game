@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="container">
+            <!-- Columns for the grid -->
+            <div class="column">
+                <div class="cell" id="03">⬜</div>
+                <div class="cell" id="02">😐</div>
+                <div class="cell" id="01">⬜</div>
+                <div class="cell" id="00">⬜</div>
+            </div>
+            <div class="column">
+                <div class="cell" id="13">⬜</div>
+                <div class="cell" id="12">⬜</div>
+                <div class="cell" id="11">⬜</div>
+                <div class="cell" id="10">⬜</div>
+            </div>
+            <div class="column">
+                <div class="cell" id="23">⬜</div>
+                <div class="cell" id="22">⬜</div>
+                <div class="cell" id="21">⬜</div>
+                <div class="cell" id="20">⬜</div>
+            </div>
+            <div class="column">
+                <div class="cell" id="33">⬜</div>
+                <div class="cell" id="32">⬜</div>
+                <div class="cell" id="31">🟩</div>
+                <div class="cell" id="30">⬜</div>
+            </div>
+            <div class="column">
+                <div class="cell" id="43">⬜</div>
+                <div class="cell" id="42">⬜</div>
+                <div class="cell" id="41">⬜</div>
+                <div class="cell" id="40">⬜</div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn" onclick="moveUp()">⬆️</button>
+            <button class="btn" onclick="moveRight()">➡️</button><br>
+            <button class="btn" onclick="moveLeft()">⬅️</button>
+            <button class="btn" onclick="moveDown()">⬇️</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

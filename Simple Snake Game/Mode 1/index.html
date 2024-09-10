@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <!-- Character encoding for the document -->
+    <meta charset="UTF-8">
+    <!-- Viewport settings for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the webpage -->
+    <title>Snake Game</title>
+    <style>
+        /* Styling for the container that holds the grid */
+        .container {
+            display: flex; /* Aligns child elements in a row */
+            margin-bottom: 30px; /* Adds space below the container */
+        }
+        /* Styling for each column in the grid */
+        .column {
+            display: flex; /* Aligns child elements in a column */
+            flex-direction: column; /* Stacks children vertically */
+            margin-left: 10px; /* Adds space to the left of each column */
+        }
+        /* Styling for each cell in the grid */
+        .cell {
+            display: flex; /* Aligns child elements (text) in the center */
+            justify-content: center; /* Horizontally centers the text */
+            align-items: center; /* Vertically centers the text */
+            margin: 0; /* Removes default margins */
+            font-size: 24px; /* Sets font size */
+            height: 40px; /* Sets the height of the cell */
+            width: 40px; /* Sets the width of the cell */
+        }
+        /* Styling for the container that holds the buttons */
+        .button-container {
+            margin-top: 10px; /* Adds space above the button container */
+        }
+        /* Styling for buttons */
+        button {
+            margin: 5px; /* Adds space around each button */
+        }
+    </style>
+</head>
+<body>
+    <!-- Container for the grid of cells -->
+    <div class="container">
+        <!-- Column 1 of the grid -->
+        <div class="column">
+            <p class="cell" id="03">⬜</p>
+            <p class="cell" id="02">😐</p>
+            <p class="cell" id="01">⬜</p>
+            <p class="cell" id="00">⬜</p>
+        </div>
+        <!-- Column 2 of the grid -->
+        <div class="column">
+            <p class="cell" id="13">⬜</p>
+            <p class="cell" id="12">⬜</p>
+            <p class="cell" id="11">⬜</p>
+            <p class="cell" id="10">⬜</p>
+        </div>
+        <!-- Column 3 of the grid -->
+        <div class="column">
+            <p class="cell" id="23">⬜</p>
+            <p class="cell" id="22">⬜</p>
+            <p class="cell" id="21">⬜</p>
+            <p class="cell" id="20">⬜</p>
+        </div>
+        <!-- Column 4 of the grid -->
+        <div class="column">
+            <p class="cell" id="33">⬜</p>
+            <p class="cell" id="32">⬜</p>
+            <p class="cell" id="31">🟩</p>
+            <p class="cell" id="30">⬜</p>
+        </div>
+        <!-- Column 5 of the grid -->
+        <div class="column">
+            <p class="cell" id="43">⬜</p>
+            <p class="cell" id="42">⬜</p>
+            <p class="cell" id="41">⬜</p>
+            <p class="cell" id="40">⬜</p>
+        </div>
+    </div>
+
+    <!-- Container for the movement control buttons -->
+    <div class="button-container">
+        <!-- Button to move the character up on the Y-axis -->
+        <button onclick="moveUp()">y+</button>
+        <!-- Button to move the character right on the X-axis -->
+        <button onclick="moveRight()">x+</button><br>
+        <!-- Button to move the character left on the X-axis -->
+        <button onclick="moveLeft()">x-</button>
+        <!-- Button to move the character down on the Y-axis -->
+        <button onclick="moveDown()">y-</button>
+    </div>
+
+    <script>
+        // Object to track the character's position
+        let characterPosition = {x: 0, y: 2};
+        // Array to keep track of the character's previous positions
+        let body = ["02"];
+
+        // Function to move the character down
+        function moveDown() {
+            // Check if moving down is within bounds and if the new position is not in body
+            if (characterPosition.y > 0 && !body.includes(characterPosition.x.toString() + (characterPosition.y - 1).toString())) {
+                characterPosition.y -= 1; // Update the character's Y position
+                updateGrid(); // Update the grid
+            }
+        }
+
+        // Function to move the character right
+        function moveRight() {
+            // Check if moving right is within bounds and if the new position is not in body
+            if (characterPosition.x < 4 && !body.includes((characterPosition.x + 1).toString() + characterPosition.y.toString())) {
+                characterPosition.x += 1; // Update the character's X position
+                updateGrid(); // Update the grid
+            }
+        }
+
+        // Function to move the character up
+        function moveUp() {
+            // Check if moving up is within bounds and if the new position is not in body
+            if (characterPosition.y < 3 && !body.includes(characterPosition.x.toString() + (characterPosition.y + 1).toString())) {
+                characterPosition.y += 1; // Update the character's Y position
+                updateGrid(); // Update the grid
+            }
+        }
+
+        // Function to move the character left
+        function moveLeft() {
+            // Check if moving left is within bounds and if the new position is not in body
+            if (characterPosition.x > 0 && !body.includes((characterPosition.x - 1).toString() + characterPosition.y.toString())) {
+                characterPosition.x -= 1; // Update the character's X position
+                updateGrid(); // Update the grid
+            }
+        }
+
+        // Function to update the cell based on the character's new position
+        function updateGrid() {
+            // If the body has 3 positions, change the oldest position to yellow
+            if (body.length === 3) {
+                document.getElementById(body[0]).innerHTML = "🟨"; 
+                body.shift(); // Remove the oldest position from body
+            }
+            // Add the new position to body
+            body.push(characterPosition.x.toString() + characterPosition.y.toString());
+            // Update the current position with the "😐" emoji
+            document.getElementById(body[body.length-1]).innerHTML = "😐";
+            // Update the previous position with the "⚫" emoji
+            document.getElementById(body[body.length-2]).innerHTML = "⚫";
+            checkForGreenBlock(); // Check if the character has landed on a green block
+        }
+
+        // Variables for the position of the green block
+        let greenBlockX = 3;
+        let greenBlockY = 1;
+
+        // Function to randomly place a green block on the grid
+        function placeGreenBlock() {
+            // Generate random positions for the green block
+            let randomX = Math.random(); 
+            greenBlockX = Math.floor(randomX * 5);
+            let randomY = Math.random(); 
+            greenBlockY = Math.floor(randomY * 4);
+            // If the position is already occupied, try again
+            if (body.includes(greenBlockX.toString() + greenBlockY.toString())) {
+                placeGreenBlock(); 
+            } else {
+                // Update the cell with the green block
+                document.getElementById(greenBlockX.toString() + greenBlockY.toString()).innerHTML = "🟩";
+            }
+        }
+
+        // Function to check if the character has landed on a green block
+        function checkForGreenBlock() {
+            // If the character's position matches the green block's position
+            if (characterPosition.x.toString() + characterPosition.y.toString() === greenBlockX.toString() + greenBlockY.toString()) {
+                // Change the cell content to a happy face
+                document.getElementById(characterPosition.x.toString() + characterPosition.y.toString()).innerHTML = "😃";
+                placeGreenBlock(); // Place a new green block
+            }
+        }
+    </script>
+</body>
+</html>
